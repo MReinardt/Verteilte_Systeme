@@ -13,6 +13,7 @@ import java.net.SocketException;
  */
 public class Server {
 
+    public PrintStream outputServer;
     /**
      * Serversocket
      */
@@ -95,11 +96,13 @@ public class Server {
     private boolean isValide(String string) {
         if (!string.matches("[0-9]+")) {
             System.out.println(-1);
+            outputServer.println(-1);
             return false;
         }
 
         if (string.equals("")) {
             System.out.println(-1);
+            outputServer.println(-1);
             return false;
         }
         try {
@@ -108,9 +111,11 @@ public class Server {
                 return true;
             } else {
                 System.out.println(-2);
+                outputServer.println(-2);
             }
         } catch (NumberFormatException e) {
             System.out.println(-1);
+            outputServer.println(-1);
         }
         return false;
     }
