@@ -9,8 +9,7 @@ import java.net.Socket;
 import java.net.SocketException;
 
 /**
- * Created by Mikel Reinhardt, Alessandro Furkim
- * on 05.10.2015.
+ * Created by Mikel Reinhardt, Alessandro Furkim on 05.10.2015.
  */
 public class Server {
 
@@ -21,35 +20,36 @@ public class Server {
 
     /**
      * Konstruktor
+     *
      * @param port
      * @throws IOException
      */
-    public Server(int port)throws IOException{
+    public Server(int port) throws IOException {
         server = new ServerSocket(port);
     }
 
     /**
-     * Diese Methode wartet in einer Endlossschleife auf einen Socket.
-     * wenn der Socket akzeptiert wird, ruft diese dann die INOUT Methode auf
-     * nachdem die Methode aufgerufen wurde, wird der Socket geschlossen
+     * Diese Methode wartet in einer Endlossschleife auf einen Socket. wenn der
+     * Socket akzeptiert wird, ruft diese dann die INOUT Methode auf nachdem die
+     * Methode aufgerufen wurde, wird der Socket geschlossen
      */
-    private void verbinde(){
+    private void verbinde() {
 
-        while (true){
+        while (true) {
             Socket socket = null;
             try {
                 System.out.println("Server wartet auf den Client.");
                 socket = server.accept();
                 inOut(socket);
-            } catch (IOException e){
+            } catch (IOException e) {
                 System.out.println("InputOuput problem");
                 e.printStackTrace();
             } finally {
-                if(socket != null){
-                    try{
+                if (socket != null) {
+                    try {
                         socket.close();
                         System.out.println("Socket closed");
-                    } catch (IOException e){
+                    } catch (IOException e) {
                         System.out.println("Socket problem, can't stop the socket");
                         e.printStackTrace();
                     }
@@ -60,19 +60,20 @@ public class Server {
 
     /**
      * Diese Methode erwartet einen Socket und holt sich dann deren Input,
+     *
      * @param socket
      * @throws IOException
      */
-    private void inOut(Socket socket) throws IOException{
+    private void inOut(Socket socket) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         PrintStream outputServer = new PrintStream(socket.getOutputStream());
         Fibonacci fibonacci = new Fibonacci();
         String string = null;
-        try{
-            while ((string = bufferedReader.readLine()) != null){
+        try {
+            while ((string = bufferedReader.readLine()) != null) {
                 int zahl;
-                if(isValide(string)){
-                    if((string = bufferedReader.readLine()) == ""){
+                if (isValide(string)) {
+                    if ((string = bufferedReader.readLine()) == "") {
                         string = bufferedReader.readLine();
                     }
                     zahl = Integer.parseInt(string);
@@ -80,33 +81,44 @@ public class Server {
                     System.out.println(bufferedReader.readLine());
                 }
             }
-        } catch (SocketException e){
+        } catch (SocketException e) {
             System.out.println("No Connection to Socket.");
         }
     }
+
     /**
-     * Hier wird der String überprüft
+     * Hier wird der String ï¿½ueberprueft
+     *
      * @param string
      * @return boolean
      */
-    private boolean isValide(String string){
-        if(string.equals("")){
+    private boolean isValide(String string) {
+        if (!string.matches("[0-9]+")) {
+            System.out.println(-1);
             return false;
         }
-        try{
+
+        if (string.equals("")) {
+            System.out.println(-1);
+            return false;
+        }
+        try {
             int zahl = Integer.parseInt(string);
-            if(zahl > 0 && zahl < 100 ){
+            if (zahl > 0 && zahl < 100) {
                 return true;
+            } else {
+                System.out.println(-2);
             }
-        }catch (NumberFormatException e){
-            System.out.println("Ungueltige Eingabe: <" + string + "> ist keine Zahl.");
+        } catch (NumberFormatException e) {
+            System.out.println(-1);
         }
         return false;
     }
 
     /**
-     * Die main Methode erzeugt einen Serversocket auf dem Port <4444> und
-     * ruft dann die Methode verbinde auf
+     * Die main Methode erzeugt einen Serversocket auf dem Port <4444> und ruft
+     * dann die Methode verbinde auf
+     *
      * @param args
      * @throws IOException
      */
