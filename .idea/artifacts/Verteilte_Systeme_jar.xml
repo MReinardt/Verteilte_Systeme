@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Verteilte_Systeme:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Verteilte_Systeme_jar</output-path>
+    <root id="archive" name="Verteilte_Systeme.jar">
+      <element id="module-output" name="Verteilte_Systeme" />
+    </root>
+  </artifact>
+</component>
