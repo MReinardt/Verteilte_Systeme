@@ -26,9 +26,10 @@ public class PinnwandClient {
     private Registry reg;
     private Pinnwand p;
     private boolean loggedIn = false;
-
-    private static int serverPort = 1090;
-
+    private static int maxMsgLength = 160;
+    private static int maxMsg = 20;
+    private static int serverPort = 4444;
+    private static final String pin = "Pinnwand";
     private static BufferedReader br;
 
     public static void main(String[] args) {
@@ -47,6 +48,7 @@ public class PinnwandClient {
             pc.initClient(password);
 
         } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -63,23 +65,28 @@ public class PinnwandClient {
                 System.out.println("no Messages");
             }
         } catch (RemoteException ex) {
+            ex.printStackTrace();
         }
     }
 
     private void initClient(String pw) {
         try {
-            System.out.println("Connectimng to Server: " + host + " Port: " + serverPort);
+            System.out.println("Connecting to Server: " + host + " Port: " + serverPort);
             reg = LocateRegistry.getRegistry(host, serverPort);
-            p = (Pinnwand) reg.lookup("Pinnwand");
-            if (p.login(pw) == 6666) {
+            p = (Pinnwand) reg.lookup(pin);
+
+            if (p.login(pw) == 1) {
                 System.out.println("Logged In");
                 loggedIn = true;
                 standBy();
-            } else {
+            }
+            if (p.login(pw) == 0) {
                 System.out.println("Log-In failed");
             }
         } catch (RemoteException ex) {
+            ex.printStackTrace();
         } catch (NotBoundException ex) {
+            ex.printStackTrace();
         }
 
     }
@@ -91,15 +98,40 @@ public class PinnwandClient {
                 String befehl = br.readLine();
                 switch (befehl) {
                     case "getAll":
+                        int count = 1;
+                        for (String s : p.getMessages()) {
+                            System.out.println(count + " : " + s);
+                            count++;
+                        }
                         break;
                     case "newMsg":
+                        System.out.println("Type in Message: ");
+                        String msg = br.readLine();
+                        if (msg.length() > 160) {
+                            System.out.println("Message can only be 160 char in length!");
+                            break;
+                        }
+                        if (p.getMessages().length >= maxMsg) {
+                            System.out.println("Max Messages :" + maxMsg);
+                            break;
+                        }
+                        if (msg.isEmpty() || msg.equals("")) {
+                            System.out.println("Empty Message!");
+                            break;
+                        }
+                        p.putMessage(msg);
+                        System.out.println("Message added to Board");
                         break;
                     case "msgCount":
+                        System.out.println(p.getMessageCount());
                         break;
                     case "getMsg":
+                        System.out.println("Index: ");
+                        System.out.println(p.getMessage(Integer.parseInt(br.readLine())));
                         break;
                 }
             } catch (IOException ex) {
+                ex.printStackTrace();
             }
 
         }
