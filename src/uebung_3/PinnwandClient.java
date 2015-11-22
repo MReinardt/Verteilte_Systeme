@@ -97,11 +97,18 @@ public class PinnwandClient {
             try {
                 String befehl = br.readLine();
                 switch (befehl) {
+
+                    case "help":
+                        System.out.println("List of Tasks available ///////////////\n");
+                        System.out.println("getAll //  newMsg  //  msgCount //  newMsg  ");
+                        break;
                     case "getAll":
-                        int count = 1;
-                        for (String s : p.getMessages()) {
-                            System.out.println(count + " : " + s);
-                            count++;
+                        if (p.getMessages().length != 0) {
+                            int count = 1;
+                            for (String s : p.getMessages()) {
+                                System.out.println(count + " : " + s);
+                                count++;
+                            }
                         }
                         break;
                     case "newMsg":
@@ -111,9 +118,12 @@ public class PinnwandClient {
                             System.out.println("Message can only be 160 char in length!");
                             break;
                         }
-                        if (p.getMessages().length >= maxMsg) {
-                            System.out.println("Max Messages :" + maxMsg);
-                            break;
+
+                        if (p.getMessages().length != 0) {
+                            if (p.getMessages().length >= maxMsg) {
+                                System.out.println("Max Messages :" + maxMsg);
+                                break;
+                            }
                         }
                         if (msg.isEmpty() || msg.equals("")) {
                             System.out.println("Empty Message!");
@@ -128,6 +138,10 @@ public class PinnwandClient {
                     case "getMsg":
                         System.out.println("Index: ");
                         System.out.println(p.getMessage(Integer.parseInt(br.readLine())));
+                        break;
+                    case "exit":
+                        System.out.println("See you soon!");
+                        loggedIn = false;
                         break;
                 }
             } catch (IOException ex) {

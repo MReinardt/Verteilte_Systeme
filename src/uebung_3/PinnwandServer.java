@@ -15,11 +15,13 @@ import java.util.ArrayList;
  */
 public class PinnwandServer extends UnicastRemoteObject implements Pinnwand {
 
-    private ArrayList<String> pinList = new ArrayList();
-    private ArrayList<Long> lifeTime = new ArrayList();
+    private ArrayList<String> pinList;
+    private ArrayList<Long> lifeTime;
 
     protected PinnwandServer() throws RemoteException {
         super();
+        pinList = new ArrayList();
+        lifeTime = new ArrayList();
     }
 
     @Override
