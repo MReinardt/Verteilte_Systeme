@@ -100,10 +100,12 @@ public class PinnwandClient {
 
                     case "help":
                         System.out.println("List of Tasks available ///////////////\n");
-                        System.out.println("getAll //  newMsg  //  msgCount //  newMsg  ");
+                        System.out.println("getAll //  new  //  count //  get  ");
                         break;
                     case "getAll":
-                        if (p.getMessages().length != 0) {
+                        if (p.getMessages().length == 0) {
+                            System.out.println("No Messages available");
+                        } else {
                             int count = 1;
                             for (String s : p.getMessages()) {
                                 System.out.println(count + " : " + s);
@@ -111,19 +113,16 @@ public class PinnwandClient {
                             }
                         }
                         break;
-                    case "newMsg":
+                    case "new":
+                        if (p.getMessageCount() >= 20) {
+                            System.out.println("Message-count max reached");
+                            break;
+                        }
                         System.out.println("Type in Message: ");
                         String msg = br.readLine();
                         if (msg.length() > 160) {
                             System.out.println("Message can only be 160 char in length!");
                             break;
-                        }
-
-                        if (p.getMessages().length != 0) {
-                            if (p.getMessages().length >= maxMsg) {
-                                System.out.println("Max Messages :" + maxMsg);
-                                break;
-                            }
                         }
                         if (msg.isEmpty() || msg.equals("")) {
                             System.out.println("Empty Message!");
@@ -132,10 +131,10 @@ public class PinnwandClient {
                         p.putMessage(msg);
                         System.out.println("Message added to Board");
                         break;
-                    case "msgCount":
+                    case "count":
                         System.out.println(p.getMessageCount());
                         break;
-                    case "getMsg":
+                    case "get":
                         System.out.println("Index: ");
                         System.out.println(p.getMessage(Integer.parseInt(br.readLine())));
                         break;

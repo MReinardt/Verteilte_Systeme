@@ -8,6 +8,7 @@ package uebung_2;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -18,9 +19,13 @@ public class PinnwandServer extends UnicastRemoteObject implements Pinnwand {
     private ArrayList<String> pinList;
     private ArrayList<Long> lifeTime;
 
+    private HashMap<Long, String> messages;
+
     protected PinnwandServer() throws RemoteException {
         super();
-        pinList = new ArrayList();
+        messages = new HashMap<Long, String>();
+        pinList = new ArrayList(1);
+        pinList.add("test");
         lifeTime = new ArrayList();
     }
 
@@ -42,8 +47,14 @@ public class PinnwandServer extends UnicastRemoteObject implements Pinnwand {
     @Override
     public String[] getMessages() throws RemoteException {
         String[] msgArray = new String[pinList.size()];
-        for (int i = 0; i <= pinList.size(); i++) {
-            msgArray[i] = pinList.get(i);
+
+        if (msgArray.length == 0 || pinList.isEmpty()) {
+            System.out.println("Empty List");
+        } else {
+            for (int i = 0; i < pinList.size(); i++) {
+                msgArray[i] = pinList.get(i);
+
+            }
         }
         return msgArray;
     }
@@ -58,6 +69,7 @@ public class PinnwandServer extends UnicastRemoteObject implements Pinnwand {
         if (msg != "" || !msg.isEmpty() || msg != " ") {
             pinList.add(msg);
             lifeTime.add(System.currentTimeMillis());
+            messages.put(System.currentTimeMillis(), msg);
             return true;
         } else {
             return false;
