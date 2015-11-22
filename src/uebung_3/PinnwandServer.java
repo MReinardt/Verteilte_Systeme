@@ -6,18 +6,20 @@
 package uebung_2;
 
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 /**
  *
  * @author RonNegi
  */
-public class PinnwandServer implements Pinnwand {
+public class PinnwandServer extends UnicastRemoteObject implements Pinnwand {
 
     private ArrayList<String> pinList = new ArrayList();
     private ArrayList<Long> lifeTime = new ArrayList();
 
-    protected PinnwandServer() {
+    protected PinnwandServer() throws RemoteException {
+        super();
     }
 
     @Override

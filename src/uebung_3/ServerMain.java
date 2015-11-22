@@ -15,7 +15,7 @@ import java.rmi.registry.Registry;
  */
 public class ServerMain {
 
-    private static int port = 4444;
+    private static int port = 1099;
 
     public static void main(String[] args) {
         createServer(port);

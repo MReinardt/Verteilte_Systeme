@@ -28,7 +28,7 @@ public class PinnwandClient {
     private boolean loggedIn = false;
     private static int maxMsgLength = 160;
     private static int maxMsg = 20;
-    private static int serverPort = 4444;
+    private static int serverPort = 1099;
     private static final String pin = "Pinnwand";
     private static BufferedReader br;
 
@@ -39,7 +39,7 @@ public class PinnwandClient {
                 serverPort = Integer.parseInt(args[1]);
             } else {
                 host = "localhost";
-                serverPort = 4444;
+                serverPort = 1099;
             }
             PinnwandClient pc = new PinnwandClient();
             br = new BufferedReader(new InputStreamReader(System.in));
