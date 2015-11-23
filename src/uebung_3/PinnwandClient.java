@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package uebung_2;
+package uebung_3;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,8 +20,6 @@ import java.rmi.registry.Registry;
 public class PinnwandClient {
 
     private static String password = "";
-    private static String postMsg = "";
-    private static String readMsg = "";
     private static String host = "";
     private Registry reg;
     private Pinnwand p;

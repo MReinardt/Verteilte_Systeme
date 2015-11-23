@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package uebung_2;
+package uebung_3;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
