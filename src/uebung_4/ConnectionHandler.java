@@ -110,7 +110,9 @@ public class ConnectionHandler implements Runnable {
         if (parameter.size() == 1) {
             nick = parameter.get(0).toString();
             clientInstance = new Client(client, this, nick);
-            MailboxServer.addClientToList(nick, clientInstance);
+            if (MailboxServer.addClientToList(nick, clientInstance) == true) {
+                clientResponse("User " + nick + " connected");
+            }
         } else {
             failedClientResponse("Wrong Parameters");
         }

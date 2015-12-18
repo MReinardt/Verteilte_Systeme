@@ -132,11 +132,13 @@ public class MailboxServer {
      * @param nick
      * @param client
      */
-    public static void addClientToList(String nick, Client client) {
+    public static boolean addClientToList(String nick, Client client) {
         if (clientList.size() <= CLIENT_MAX) {
             clientList.put(nick, client);
+            return true;
         } else {
             System.out.println("Clientlist is full! Max 6");
+            return false;
         }
     }
 
