@@ -8,16 +8,17 @@ package uebung_4;
 import java.net.Socket;
 
 /**
+ * Client
  *
  * @author RonNegi
  */
 public class Client {
 
     public Socket clientSocket;
-    public Thread clientThread;
+    public Runnable clientThread;
     public String nick;
 
-    public Client(Socket client, Thread clientThread, String nick) {
+    public Client(Socket client, Runnable clientThread, String nick) {
         this.clientSocket = client;
         this.clientThread = clientThread;
         this.nick = nick;
@@ -27,7 +28,7 @@ public class Client {
         return clientSocket;
     }
 
-    public Thread getClientThread() {
+    public Runnable getClientThread() {
         return clientThread;
     }
 

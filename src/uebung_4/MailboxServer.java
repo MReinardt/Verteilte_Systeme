@@ -65,7 +65,7 @@ public class MailboxServer {
      * @param nick
      * @return Client
      */
-    private static Client getClient(String nick) {
+    public static Client getClientX(String nick) {
         return clientList.get(nick);
     }
 
@@ -75,7 +75,7 @@ public class MailboxServer {
      * @param runnable
      * @return
      */
-    private static Client getClient(Runnable runnable) {
+    public static Client getClient(Runnable runnable) {
         for (Client c : clientList.values()) {
             if (c.getClientThread().equals(runnable)) {
                 return c;
@@ -89,8 +89,8 @@ public class MailboxServer {
      *
      * @return users
      */
-    private static String getUsersAsString() {
-        String users = "";
+    public static String getUsersAsString() {
+        String users = "Users Online: ";
         if (clientList.size() == 0) {
             return "no connected clients";
         }
@@ -105,17 +105,25 @@ public class MailboxServer {
      *
      * @return
      */
-    private static int getNumberClients() {
+    public static int getNumberClients() {
         return clientList.size();
     }
 
     /**
      * Removes Client from ClientList for a given Nick Name
      *
-     * @param nick
+     * @param run
      */
-    private static void removeClient(String nick) {
-        clientList.remove(nick);
+    public static void removeClient(Runnable run) {
+        for (Client client : clientList.values()) {
+            if (client.getClientThread().equals(run)) {
+                clientList.values().remove(client);
+            }
+        }
+    }
+
+    public static void disconnectClient() {
+
     }
 
     /**
@@ -124,8 +132,8 @@ public class MailboxServer {
      * @param nick
      * @param client
      */
-    private static void addClientToList(String nick, Client client) {
-        if (clientList.size() <= 6) {
+    public static void addClientToList(String nick, Client client) {
+        if (clientList.size() <= CLIENT_MAX) {
             clientList.put(nick, client);
         } else {
             System.out.println("Clientlist is full! Max 6");
