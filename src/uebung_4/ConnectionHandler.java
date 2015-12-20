@@ -30,7 +30,7 @@ public class ConnectionHandler implements Runnable {
     private boolean loggedIn = true;
     private PrintWriter output;
     private JSONParser jps;
-    private int sequence = -1;
+    private int sequence = 1;
     private String nick;
 
     public ConnectionHandler(Socket client) {
